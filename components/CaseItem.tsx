@@ -7,6 +7,7 @@ import {
   Pressable,
   Image,
 } from "react-native";
+import AppText from "./AppText";
 
 interface Case {
   "name": string,
@@ -35,7 +36,7 @@ export default function CaseItem({ item }: CaseItemProps) {
     }
 
     if (["In Progress", "New", "Cancelled"].includes(item.status)) {
-      return <Text style={[styles.dot, { color: dynamicColor }]}>●</Text>;
+      return <AppText style={[styles.dot, { color: dynamicColor }]}>●</AppText>;
     }
 
 
@@ -51,17 +52,17 @@ export default function CaseItem({ item }: CaseItemProps) {
       onPress={() => setIsSelected(!isSelected)}
     >
         <View style={styles.headerView}>
-            <Text style={styles.headerText}>{item.name}</Text>
+            <AppText style={styles.headerText}>{item.name}</AppText>
             <View style={styles.statusView}>
               {renderStatusIcon()}
-              <Text style={[styles.statusText, {color: dynamicColor}]}>{item.status}</Text>
+              <AppText style={[styles.statusText, {color: dynamicColor}]}>{item.status}</AppText>
             </View>
         </View>
         <View style={styles.seperatorLine}/>
         <View style={styles.caseBodyContainer}>
-          <Text style={styles.caseBodyText}>Case ID: <Text style={styles.caseBodyTextValue}>{item.caseId}</Text></Text>
-          <Text style={styles.caseBodyText}>Location: <Text style={styles.caseBodyTextValue}>{item.location}</Text></Text>
-          <Text style={styles.caseBodyText}>Date Created: <Text style={styles.caseBodyTextValue}>{item.dateCreated}</Text></Text>
+          <AppText style={styles.caseBodyText}>Case ID: <AppText style={styles.caseBodyTextValue}>{item.caseId}</AppText></AppText>
+          <AppText style={styles.caseBodyText}>Location: <AppText style={styles.caseBodyTextValue}>{item.location}</AppText></AppText>
+          <AppText style={styles.caseBodyText}>Date Created: <AppText style={styles.caseBodyTextValue}>{item.dateCreated}</AppText></AppText>
         </View>
 
     </Pressable>
@@ -74,14 +75,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderWidth: 1,
         borderColor: '#D9DADD',
-        paddingBottom: 4
+        paddingTop: 8,
+        paddingBottom: 8
     },
     headerView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 18,
-        paddingTop: 4,
         paddingBottom: 4
     },
     statusView: {
@@ -90,15 +90,18 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontFamily: 'RalewayMedium',
+        paddingLeft: 18,
         fontSize: 16,
         lineHeight: 16,
-        letterSpacing: 0.75,
+        letterSpacing: 1,
         color: '#2D4263'
     },
     statusText: {
         fontFamily: 'RalewaySemiBold',
+        paddingRight: 13,
         fontSize: 14,
         lineHeight: 14,
+        letterSpacing: 1,
         color: '#2D4263'
     },
     statusIcon: {
@@ -113,21 +116,20 @@ const styles = StyleSheet.create({
       paddingRight: 2  
     },
     seperatorLine: {
-      height: 0.5,
+      height: StyleSheet.hairlineWidth,
       backgroundColor: '#6D6D6D',
       marginHorizontal: 6,
-      marginTop: 1
     },
     caseBodyContainer: {
-      paddingTop: 4,
+      paddingTop: 6,
       paddingLeft: 18,
-      gap: 3
+      gap: 6
     },
     caseBodyText: {
       fontFamily: 'RalewayRegular',
       fontSize: 12,
       lineHeight: 12,
-      letterSpacing: 0.75,
+      letterSpacing: 1,
       color: '#6D6D6D'
     },
     caseBodyTextValue: {

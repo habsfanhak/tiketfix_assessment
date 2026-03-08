@@ -47,6 +47,7 @@ export default function TabsLayout() {
         tabBarActiveBackgroundColor: "#E8F3FF", 
         tabBarLabelStyle: {
           fontSize: 10,
+          letterSpacing: 1,
           fontFamily: "RalewaySemiBold",
           marginBottom: 8,
         },

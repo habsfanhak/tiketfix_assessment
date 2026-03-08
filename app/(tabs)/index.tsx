@@ -100,17 +100,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderRadius: 15,
     backgroundColor: '#FFFFFF',
-    height: 43,
+    height: 40,
     paddingHorizontal: 20,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+
+    elevation: 4,
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 15,
+    letterSpacing: 1,
     fontFamily: 'RalewaySemiBold'
   },
   searchIcon: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     resizeMode: "contain",
     marginLeft: 10
   },

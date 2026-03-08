@@ -1,13 +1,13 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
   Pressable,
   View,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
 } from "react-native";
+import AppText from "./AppText";
 
 type SortPillProps = {
   text: string;
@@ -35,9 +35,8 @@ export default function SortPill({
     >
       {selected ? (
         <View style={styles.verticalContentStack}>
-          {/* Top Triangle */}
-          <Text style={styles.arrowText}>▲</Text>
-          <Text
+          <AppText style={styles.arrowText}>▴</AppText>
+          <AppText
             style={[
               styles.sortPillText,
               styles.sortPillTextSelected,
@@ -45,14 +44,14 @@ export default function SortPill({
             ]}
           >
             {text}
-          </Text>
+          </AppText>
           
-          <Text style={styles.arrowText}>▼</Text>
+          <AppText style={styles.arrowText}>▾</AppText>
         </View>
       ) : (
-        <Text style={[styles.sortPillText, textStyle]}>
+        <AppText style={[styles.sortPillText, textStyle]}>
           {text}
-        </Text>
+        </AppText>
       )}
     </Pressable>
   );
@@ -77,14 +76,15 @@ const styles = StyleSheet.create({
   },
   arrowText: {
     color: '#FFFFFF',
-    fontSize: 6,
-    lineHeight: 6,
-    marginVertical: -2.5,
+    fontSize: 11,
+    lineHeight: 11,
+    marginVertical: -3.4,
   },
   sortPillText: {
     color: "#6889CC",
     fontSize: 15,
     lineHeight: 15, 
+    letterSpacing: 1,
     fontFamily: "RalewaySemiBold",
   },
   sortPillTextSelected: {
