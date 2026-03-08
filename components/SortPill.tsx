@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   Pressable,
+  View,
   type StyleProp,
   type ViewStyle,
   type TextStyle,
@@ -32,22 +33,34 @@ export default function SortPill({
         style,
       ]}
     >
-      <Text
-        style={[
-          styles.sortPillText,
-          selected && styles.sortPillTextSelected,
-          textStyle,
-        ]}
-      >
-        {text}
-      </Text>
+      {selected ? (
+        <View style={styles.verticalContentStack}>
+          {/* Top Triangle */}
+          <Text style={styles.arrowText}>▲</Text>
+          <Text
+            style={[
+              styles.sortPillText,
+              styles.sortPillTextSelected,
+              textStyle,
+            ]}
+          >
+            {text}
+          </Text>
+          
+          <Text style={styles.arrowText}>▼</Text>
+        </View>
+      ) : (
+        <Text style={[styles.sortPillText, textStyle]}>
+          {text}
+        </Text>
+      )}
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   sortPill: {
-    height: 25,
+    height: 30,
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 11,
     borderRadius: 15,
@@ -57,10 +70,21 @@ const styles = StyleSheet.create({
   sortPillSelected: {
     backgroundColor: "#6889CC",
   },
+  verticalContentStack: {
+    alignItems: 'center',
+    justifyContent: 'center', 
+    height: '100%',
+  },
+  arrowText: {
+    color: '#FFFFFF',
+    fontSize: 8,
+    lineHeight: 8,
+    marginVertical: -2.5,
+  },
   sortPillText: {
     color: "#6889CC",
-    fontSize: 16,
-    lineHeight: 16,
+    fontSize: 15,
+    lineHeight: 15, 
     fontFamily: "RalewaySemiBold",
   },
   sortPillTextSelected: {

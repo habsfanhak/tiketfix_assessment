@@ -36,7 +36,7 @@ export default function Index() {
         </View>
         <View style={styles.caseSortContainer}>
           <SortPill
-            text="A-Z"
+            text="AZ"
             selected={sortBy === "az"}
             onPress={() => setSortBy("az")}
           />
