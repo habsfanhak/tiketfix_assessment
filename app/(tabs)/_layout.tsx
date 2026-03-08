@@ -18,7 +18,6 @@ function TabIcon({
         style={iconStyle}
         resizeMode="contain"
       />
-      {/* This View acts as the border, positioned absolutely at the bottom */}
       {focused && <View style={styles.activeUnderline} />}
     </View>
   );
@@ -26,7 +25,6 @@ function TabIcon({
 
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
-  // We need a set height to make the math work for the container
   const TAB_BAR_HEIGHT = 65; 
 
   return (
@@ -44,13 +42,13 @@ export default function TabsLayout() {
           marginTop: 12, 
         },
         tabBarItemStyle: {
-          paddingHorizontal: 0, // Ensure the highlight hits the edges
+          paddingHorizontal: 0,
         },
         tabBarActiveBackgroundColor: "#E8F3FF", 
         tabBarLabelStyle: {
           fontSize: 10,
           fontFamily: "RalewaySemiBold",
-          marginBottom: 8, // Push label up slightly from the bottom border
+          marginBottom: 8,
         },
         tabBarActiveTintColor: "#46649C",
         tabBarInactiveTintColor: "#46649C",

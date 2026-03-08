@@ -1,13 +1,11 @@
 import React from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Pressable,
   Image,
-  type StyleProp,
-  type ViewStyle,
-  type TextStyle,
 } from "react-native";
 
 interface Case {
@@ -24,6 +22,7 @@ interface CaseItemProps {
 
 export default function CaseItem({ item }: CaseItemProps) {
   const dynamicColor = STATUS_COLORS[item.status as keyof typeof STATUS_COLORS];
+  const [isSelected, setIsSelected] = useState(false);
 
   const renderStatusIcon = () => {
     if (item.status === "Select Lawyer") {
@@ -44,7 +43,13 @@ export default function CaseItem({ item }: CaseItemProps) {
   };
   
   return (
-    <View style={styles.caseContainer}>
+    <Pressable 
+      style={[
+        styles.caseContainer,
+        { backgroundColor: isSelected ? '#DDFFE3' : '#FFFFFF' }
+      ]}
+      onPress={() => setIsSelected(!isSelected)}
+    >
         <View style={styles.headerView}>
             <Text style={styles.headerText}>{item.name}</Text>
             <View style={styles.statusView}>
@@ -59,7 +64,7 @@ export default function CaseItem({ item }: CaseItemProps) {
           <Text style={styles.caseBodyText}>Date Created: <Text style={styles.caseBodyTextValue}>{item.dateCreated}</Text></Text>
         </View>
 
-    </View>
+    </Pressable>
   );
 }
 
@@ -76,7 +81,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 18,
-        paddingTop: 4
+        paddingTop: 4,
+        paddingBottom: 2
     },
     statusView: {
         flexDirection: 'row',
@@ -111,7 +117,7 @@ const styles = StyleSheet.create({
       marginTop: 1
     },
     caseBodyContainer: {
-      marginTop: 2,
+      paddingTop: 2,
       paddingLeft: 18,
       gap: 1
     },
