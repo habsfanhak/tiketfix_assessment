@@ -1,98 +1,132 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image, TextInput, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useFonts } from "expo-font";
+import { useState } from "react";
+import SortPill from "@/components/SortPill";
+import CaseItem from "@/components/CaseItem";
+import { cases } from "@/data/cases";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function Index() {
+  const [sortBy, setSortBy] = useState<"az" | "date" | "status">("az");
 
-export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
+    <>
+      <SafeAreaView
+        style={styles.background}
+        edges={['top', 'left', 'right']}
+      >
+        <View
+          style={styles.header}
+        >
+          <Image source={require('@/assets/images/logo.png')} style={styles.logoLeft}/>
+          <Image source={require('@/assets/images/notification.png')} style={styles.logoRight}/>
+        </View>
+        <View style={styles.searchBarContainer}>
+          <View style={styles.searchBar}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search..."
+              placeholderTextColor="rgba(0,0,0,0.4)"
             />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+            <Image
+              source={require('@/assets/images/search.png')}
+              style={styles.searchIcon}
+            />
+          </View>
+        </View>
+        <View style={styles.caseSortContainer}>
+          <SortPill
+            text="A-Z"
+            selected={sortBy === "az"}
+            onPress={() => setSortBy("az")}
+          />
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+          <SortPill
+            text="Date"
+            selected={sortBy === "date"}
+            onPress={() => setSortBy("date")}
+          />
+
+          <SortPill
+            text="Status"
+            selected={sortBy === "status"}
+            onPress={() => setSortBy("status")}
+          />
+        </View>
+
+        <FlatList
+          data={cases}
+          style={styles.flatList}
+          persistentScrollbar={true} // Android
+          contentContainerStyle={styles.caseContainer} 
+          keyExtractor={(item, index) => `${item.caseId}-${index}`}
+          renderItem={({ item }) => <CaseItem item={item}/>}
+        />
+                
+      </SafeAreaView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  background: {
+    flex: 1,
+    backgroundColor: '#E0EAFF',
+    paddingTop: 12,
+  },
+  logoLeft: {
+    height: 45,
+    width: 45,
+    resizeMode: "contain"
+  },
+  logoRight: {
+    height: 45,
+    width: 45,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  searchBarContainer: {
+    marginTop: 15,
+    paddingHorizontal: 22,
+  },
+  searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    borderRadius: 15,
+    backgroundColor: '#FFFFFF',
+    height: 43,
+    paddingHorizontal: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    fontFamily: 'RalewaySemiBold'
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  searchIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: "contain",
+    marginLeft: 10
   },
-});
+  caseSortContainer: {
+    marginTop: 15,
+    flexDirection: 'row',
+    paddingHorizontal: 22,
+    gap: 5
+  },
+  flatList: {
+    flex: 1,
+    marginTop: 16,
+  },
+  caseContainer: {
+    paddingHorizontal: 25,
+    paddingBottom: 20,
+    gap: 5,
+  },
+
+})

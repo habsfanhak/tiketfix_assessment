@@ -1,35 +1,147 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import { Image, StyleSheet, View, Dimensions } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+function TabIcon({
+  focused,
+  active,
+  iconStyle
+}: {
+  focused: boolean;
+  active: any;
+  iconStyle: any;
+}) {
+  return (
+    <View style={styles.iconWrapper}>
+      <Image
+        source={active}
+        style={iconStyle}
+        resizeMode="contain"
+      />
+      {/* This View acts as the border, positioned absolutely at the bottom */}
+      {focused && <View style={styles.activeUnderline} />}
+    </View>
+  );
+}
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function TabsLayout() {
+  const insets = useSafeAreaInsets();
+  // We need a set height to make the math work for the container
+  const TAB_BAR_HEIGHT = 65; 
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarStyle: {
+          height: TAB_BAR_HEIGHT + insets.bottom,
+          backgroundColor: "#FFFFFF",
+          borderTopWidth: 1,
+          borderTopColor: '#E8E8E8',
+          overflow: 'visible', 
+        },
+        tabBarIconStyle: {
+          marginTop: 12, 
+        },
+        tabBarItemStyle: {
+          paddingHorizontal: 0, // Ensure the highlight hits the edges
+        },
+        tabBarActiveBackgroundColor: "#E8F3FF", 
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontFamily: "RalewaySemiBold",
+          marginBottom: 8, // Push label up slightly from the bottom border
+        },
+        tabBarActiveTintColor: "#46649C",
+        tabBarInactiveTintColor: "#46649C",
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              active={require("@/assets/images/home_icon_selected.png")}
+              iconStyle={[styles.icon, { height: 38, width: 38, marginBottom: 4 }]}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="messages"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Messages",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              active={require("@/assets/images/messages_icon_selected.png")}
+              iconStyle={styles.icon}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Cases",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              active={require("@/assets/images/cases_icon_selected.png")}
+              iconStyle={[styles.icon, { height: 30, width: 30, marginBottom: 3 }]}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          title: "Calendar",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              active={require("@/assets/images/calendar_icon_selected.png")}
+              iconStyle={styles.icon}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="user"
+        options={{
+          title: "User",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              active={require("@/assets/images/user_icon_selected.png")}
+              iconStyle={styles.icon}
+            />
+          ),
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  iconWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: Dimensions.get('window').width / 5,
+    height: 65,
+  },
+  icon: {
+    width: 30,
+    height: 30,
+  },
+  activeUnderline: {
+    position: 'absolute',
+    bottom: 0, 
+    left: 0,
+    right: 0,
+    height: 4,
+    backgroundColor: '#A6CCF6',
+  },
+});
