@@ -60,7 +60,7 @@ export default function SortPill({
 
 const styles = StyleSheet.create({
   sortPill: {
-    height: 30,
+    height: 24,
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 11,
     borderRadius: 15,
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
   },
   arrowText: {
     color: '#FFFFFF',
-    fontSize: 8,
-    lineHeight: 8,
+    fontSize: 6,
+    lineHeight: 6,
     marginVertical: -2.5,
   },
   sortPillText: {

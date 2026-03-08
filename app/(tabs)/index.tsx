@@ -5,6 +5,7 @@ import { useState } from "react";
 import SortPill from "@/components/SortPill";
 import CaseItem from "@/components/CaseItem";
 import { cases } from "@/data/cases";
+import AppText from "@/components/AppText";
 
 export default function Index() {
   const [sortBy, setSortBy] = useState<"az" | "date" | "status">("az");

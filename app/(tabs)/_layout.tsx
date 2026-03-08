@@ -62,7 +62,7 @@ export default function TabsLayout() {
             <TabIcon
               focused={focused}
               active={require("@/assets/images/home_icon_selected.png")}
-              iconStyle={[styles.icon, { height: 38, width: 38, marginBottom: 4 }]}
+              iconStyle={[styles.icon]}
             />
           ),
         }}
@@ -88,7 +88,7 @@ export default function TabsLayout() {
             <TabIcon
               focused={focused}
               active={require("@/assets/images/cases_icon_selected.png")}
-              iconStyle={[styles.icon, { height: 30, width: 30, marginBottom: 3 }]}
+              iconStyle={[styles.icon]}
             />
           ),
         }}
@@ -131,8 +131,9 @@ const styles = StyleSheet.create({
     height: 65,
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 32,
+    height: 32,
+    marginBottom: 13
   },
   activeUnderline: {
     position: 'absolute',

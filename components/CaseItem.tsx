@@ -70,11 +70,11 @@ export default function CaseItem({ item }: CaseItemProps) {
 
 const styles = StyleSheet.create({
     caseContainer: {
-        height: 97,
         borderRadius: 20,
         backgroundColor: '#FFFFFF',
         borderWidth: 1,
-        borderColor: '#D9DADD'
+        borderColor: '#D9DADD',
+        paddingBottom: 4
     },
     headerView: {
         flexDirection: 'row',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 18,
         paddingTop: 4,
-        paddingBottom: 2
+        paddingBottom: 4
     },
     statusView: {
         flexDirection: 'row',
@@ -91,12 +91,14 @@ const styles = StyleSheet.create({
     headerText: {
         fontFamily: 'RalewayMedium',
         fontSize: 16,
+        lineHeight: 16,
+        letterSpacing: 0.75,
         color: '#2D4263'
     },
     statusText: {
         fontFamily: 'RalewaySemiBold',
         fontSize: 14,
-        lineHeight: 16,
+        lineHeight: 14,
         color: '#2D4263'
     },
     statusIcon: {
@@ -117,13 +119,15 @@ const styles = StyleSheet.create({
       marginTop: 1
     },
     caseBodyContainer: {
-      paddingTop: 2,
+      paddingTop: 4,
       paddingLeft: 18,
-      gap: 1
+      gap: 3
     },
     caseBodyText: {
       fontFamily: 'RalewayRegular',
       fontSize: 12,
+      lineHeight: 12,
+      letterSpacing: 0.75,
       color: '#6D6D6D'
     },
     caseBodyTextValue: {
