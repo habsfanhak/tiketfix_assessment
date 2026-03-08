@@ -2,20 +2,12 @@ import React from "react";
 import { useState } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Pressable,
   Image,
 } from "react-native";
 import AppText from "./AppText";
-
-interface Case {
-  "name": string,
-  "caseId": string,
-  "location": string,
-  "dateCreated": string,
-  "status": string
-};
+import Case from "./Case";
 
 interface CaseItemProps {
   item: Case;
@@ -62,7 +54,15 @@ export default function CaseItem({ item }: CaseItemProps) {
         <View style={styles.caseBodyContainer}>
           <AppText style={styles.caseBodyText}>Case ID: <AppText style={styles.caseBodyTextValue}>{item.caseId}</AppText></AppText>
           <AppText style={styles.caseBodyText}>Location: <AppText style={styles.caseBodyTextValue}>{item.location}</AppText></AppText>
-          <AppText style={styles.caseBodyText}>Date Created: <AppText style={styles.caseBodyTextValue}>{item.dateCreated}</AppText></AppText>
+          <AppText style={styles.caseBodyText}>Date Created: <AppText style={styles.caseBodyTextValue}>
+            {new Date(item.dateCreated).toLocaleDateString("en-CA", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              timeZone: "UTC",
+            })}
+            </AppText>
+          </AppText>
         </View>
 
     </Pressable>
@@ -75,14 +75,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderWidth: 1,
         borderColor: '#D9DADD',
-        paddingTop: 8,
+        paddingTop: 2,
         paddingBottom: 8
     },
     headerView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingBottom: 4
+        paddingBottom: 0,
+        minHeight: 28
     },
     statusView: {
         flexDirection: 'row',
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     caseBodyContainer: {
       paddingTop: 6,
       paddingLeft: 18,
-      gap: 6
+      gap: 5
     },
     caseBodyText: {
       fontFamily: 'RalewayRegular',

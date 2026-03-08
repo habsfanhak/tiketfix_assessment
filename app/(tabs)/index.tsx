@@ -1,14 +1,66 @@
-import { Text, View, StyleSheet, Image, TextInput, FlatList } from "react-native";
+import { View, StyleSheet, Image, TextInput, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useFonts } from "expo-font";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SortPill from "@/components/SortPill";
 import CaseItem from "@/components/CaseItem";
 import { cases } from "@/data/cases";
-import AppText from "@/components/AppText";
+import Case from "@/components/Case";
 
 export default function Index() {
   const [sortBy, setSortBy] = useState<"az" | "date" | "status">("az");
+  const [text, setText] = useState('');
+  const [testCases, setTestCases] = useState<Case[]>(cases);
+
+  useEffect(() => {
+    setTestCases((prevCases) => {
+      const sorted = [...prevCases];
+
+      if (sortBy === "az") {
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      if (sortBy === "date") {
+        sorted.sort(
+          (a, b) =>
+            new Date(a.dateCreated).getTime() -
+            new Date(b.dateCreated).getTime()
+        );
+      }
+
+      if (sortBy === "status") {
+        const statusOrder = {
+          New: 0,
+          "Select Lawyer": 1,
+          "In Progress": 2,
+          Resolved: 3,
+          Cancelled: 4,
+        };
+
+        sorted.sort(
+          (a, b) =>
+            (statusOrder[a.status as keyof typeof statusOrder] ?? 99) -
+            (statusOrder[b.status as keyof typeof statusOrder] ?? 99)
+        );
+      }
+
+      return sorted;
+    });
+  }, [sortBy]);
+
+  useEffect(() => {
+    const updatedCases = cases.filter((caseItem) => {
+      if (caseItem.name.toLowerCase().includes(text.toLowerCase())) {
+        return true;
+      }
+      else if (caseItem.caseId.startsWith(text)) {
+        return true;
+      }
+
+      return false;
+    })
+
+    setTestCases(updatedCases);
+  }, [text])
 
   return (
     <>
@@ -28,6 +80,8 @@ export default function Index() {
               style={styles.searchInput}
               placeholder="Search..."
               placeholderTextColor="rgba(0,0,0,0.4)"
+              onChangeText={setText}
+              value={text}
             />
             <Image
               source={require('@/assets/images/search.png')}
@@ -56,9 +110,9 @@ export default function Index() {
         </View>
 
         <FlatList
-          data={cases}
+          data={testCases}
           style={styles.flatList}
-          persistentScrollbar={true} // Android
+          persistentScrollbar={true}
           contentContainerStyle={styles.caseContainer} 
           keyExtractor={(item, index) => `${item.caseId}-${index}`}
           renderItem={({ item }) => <CaseItem item={item}/>}
@@ -106,11 +160,10 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 1,
     shadowRadius: 4,
-
     elevation: 4,
   },
   searchInput: {
@@ -136,7 +189,8 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   caseContainer: {
-    paddingHorizontal: 25,
+    paddingLeft: 25,
+    paddingRight: 36,
     paddingBottom: 20,
     gap: 5,
   },
