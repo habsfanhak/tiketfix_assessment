@@ -1,6 +1,15 @@
 ## TiketFix Assessment
 
-The goal of this assessment was to implement a figma design as a react native one pager. Aside from the single page, basic routing and case searching/filtering were also implemented.
+The goal of this assessment was to implement the provided Figma design as a React Native screen.
+
+The implementation includes:
+
+* A responsive React Native layout matching the provided design
+* Reusable UI components (CaseItem, SortPill)
+* Case sorting (A-Z, Date, Status)
+* Case filtering via the search bar
+* Case selection highlighting
+* Basic routing setup for future screens
 
 ### Original Design
 
