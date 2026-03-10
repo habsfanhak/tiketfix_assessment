@@ -11,6 +11,15 @@ The implementation includes:
 * Case selection highlighting
 * Basic routing setup for future screens
 
+### Running the App
+```npm install```
+
+Install Dependencies
+
+```npx expo start```
+
+Start the app, scan with expo go to see a mobile build
+
 ### Original Design
 
 <img src="assets/evidence/Original_Design.png" width="400">
